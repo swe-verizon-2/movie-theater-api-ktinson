@@ -74,4 +74,8 @@ router.get('/shows/:id', async (req, res) =>{
     let result = await Show.findByPk(req.params.id)
     res.json(result)
 })
+router.delete('/shows/:id', async (req, res) =>{
+    let result = await Show.destroy({where: {id: req.params.id}})
+    res.json(result)
+})
 module.exports = router
