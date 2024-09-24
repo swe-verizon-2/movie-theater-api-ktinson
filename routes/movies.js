@@ -17,11 +17,11 @@ router.get('/shows', async (req, res) =>{
     let result = await Show.findAll()
     res.json(result)
 })
-router.get('/user/:id', async (req, res) =>{
+router.get('/users/:id', async (req, res) =>{
     let result = await User.findByPk(req.params.id)
     res.json(result)
 })
-router.get('/show/:id', async (req, res) =>{
+router.get('/shows/:id', async (req, res) =>{
     let result = await Show.findByPk(req.params.id)
     res.json(result)
 })
