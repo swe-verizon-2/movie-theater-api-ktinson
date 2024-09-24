@@ -9,11 +9,11 @@ router.get('/', async (req, res) =>{
     arr.push({users: result},{shows: results})
     res.json(arr)
 })
-router.get('/user', async (req, res) =>{
+router.get('/users', async (req, res) =>{
     let result = await User.findAll()
     res.json(result)
 })
-router.get('/show', async (req, res) =>{
+router.get('/shows', async (req, res) =>{
     let result = await Show.findAll()
     res.json(result)
 })
