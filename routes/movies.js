@@ -46,6 +46,19 @@ router.get('/shows/:id/users/', async (req, res) =>{
     // let consoleUserShows = await Show.findAll({include: User})
     res.json(result)
 })
+router.put('/shows/:id/available', async (req, res) =>{
+    const result =[]
+    let resultShow = await Show.findByPk(req.params.id)
+    if(resultShow.available === false){
+    await resultShow.update({available: true}, {where:{id :req.params.id}})
+    res.json(resultShow)
+    }else if(resultShow.available === true){
+    await resultShow.update({available: false}, {where:{id :req.params.id}})
+    res.json(resultShow)
+    }else{
+        res.send('show not found')
+    }
+})
 router.get('/shows/:id/users/:id', async (req, res) =>{
     const result =[]
     let resultUser = await User.findByPk(req.params.id)
