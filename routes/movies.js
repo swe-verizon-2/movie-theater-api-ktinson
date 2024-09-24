@@ -55,6 +55,8 @@ router.put('/shows/:id/available', async (req, res) =>{
     //which returned an error after first setting it and didn't update the database
     //I also received an error because I wasnt sending after my json
     //it seemed to want a clear end to stop it from running continously
+    //also thought it need to be a get method and wasted like an hour trying to figure out how to 
+    //to update with a git request
     res.json(resultShow)
     }else if(resultShow.available === true){
     await resultShow.update({available: false}, {where:{id :req.params.id}})
