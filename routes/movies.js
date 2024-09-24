@@ -51,6 +51,10 @@ router.put('/shows/:id/available', async (req, res) =>{
     let resultShow = await Show.findByPk(req.params.id)
     if(resultShow.available === false){
     await resultShow.update({available: true}, {where:{id :req.params.id}})
+    //I forgot .update was an option and was attempting to set .available using =
+    //which returned an error after first setting it and didn't update the database
+    //I also received an error because I wasnt sending after my json
+    //it seemed to want a clear end to stop it from running continously
     res.json(resultShow)
     }else if(resultShow.available === true){
     await resultShow.update({available: false}, {where:{id :req.params.id}})
