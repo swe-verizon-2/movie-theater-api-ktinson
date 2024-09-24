@@ -37,6 +37,26 @@ router.put('/users/:id/shows/:id', async (req, res) =>{
     console.log(consoleUserShows)
     res.json(result)
 })
+router.get('/shows/:id/users/', async (req, res) =>{
+    const result =[]
+    let resultShow = await Show.findByPk(req.params.id)
+    let showUsers =await resultShow.getUsers()
+    result.push({shows: resultShow, users: showUsers})
+    console.table(result)
+    // let consoleUserShows = await Show.findAll({include: User})
+    res.json(result)
+})
+router.get('/shows/:id/users/:id', async (req, res) =>{
+    const result =[]
+    let resultUser = await User.findByPk(req.params.id)
+    let resultShow = await Show.findByPk(req.params.id)
+    result.push({shows: resultShow, user: resultUser})
+    await resultShow.addUser(resultUser)
+    let consoleUserShows = await Show.findAll({include: User})
+    console.log(result)
+    console.log(consoleUserShows)
+    res.json(result)
+})
 router.get('/shows/:id', async (req, res) =>{
     let result = await Show.findByPk(req.params.id)
     res.json(result)
