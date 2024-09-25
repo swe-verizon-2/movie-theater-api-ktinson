@@ -17,10 +17,10 @@ router.get('/shows', async (req, res) =>{
     let result = await Show.findAll()
     res.json(result)
 })
-router.get('/users/:id', async (req, res) =>{
-    let result = await User.findByPk(req.params.id)
-    res.json(result)
-})
+// router.get('/users/:id', async (req, res) =>{
+//     let result = await User.findByPk(req.params.id)
+//     res.json(result)
+// })
 router.get('/users/:id/shows', async (req, res) =>{
     let result = await User.findByPk(req.params.id)
     res.json(result)
