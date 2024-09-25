@@ -6,7 +6,7 @@ const request = require("supertest")
 const { db } = require('./db/connection');
 const { User, Show } = require('./models/index')
 const app = require('./src/app');
-const seedMusician = require("./seedData");
-const router = require('./routes/musicians')
+const seed = require("./db/seed");
+const router = require('./routes/movies')
 
-app.use('/musicians', router)
+app.use('/movies', router)
