@@ -17,24 +17,27 @@ router.get('/shows', async (req, res) =>{
     let result = await Show.findAll()
     res.json(result)
 })
-// router.get('/users/:id', async (req, res) =>{
-//     let result = await User.findByPk(req.params.id)
-//     res.json(result)
-// })
+router.get('/users/:id', async (req, res) =>{
+    let result = await User.findByPk(req.params.id)
+    res.json(result)
+})
 router.get('/users/:id/shows', async (req, res) =>{
     let result = await User.findByPk(req.params.id)
     res.json(result)
 })
 
-router.put('/users/:id/shows/:id', async (req, res) =>{
+router.put('/users/:userId/shows/:showId', async (req, res) =>{
+    const {showId, userId} = req.params
     const result =[]
-    let resultUser = await User.findByPk(req.params.id)
-    let resultShow = await Show.findByPk(req.params.id)
+    let resultUser = await User.findByPk(userId)
+    let resultShow = await Show.findByPk(showId)
     result.push({user: resultUser, shows: resultShow})
-    await resultUser.addShow(resultShow)
-    let consoleUserShows = await User.findAll({include: Show})
-    console.log(result)
-    console.log(consoleUserShows)
+    await resultShow.addUsers(resultUser)
+    let response = await resultUser.getShows()
+    console.table(response)
+    // let consoleUserShows = await User.findAll({include: Show})
+    console.table(result)
+    //console.log(consoleUserShows)
     res.json(result)
 })
 router.get('/shows/:id/users/', async (req, res) =>{
@@ -42,7 +45,9 @@ router.get('/shows/:id/users/', async (req, res) =>{
     let resultShow = await Show.findByPk(req.params.id)
     let showUsers =await resultShow.getUsers()
     result.push({shows: resultShow, users: showUsers})
+    let response = await resultShow.getUsers()
     console.table(result)
+    console.table(response)
     // let consoleUserShows = await Show.findAll({include: User})
     res.json(result)
 })
@@ -59,14 +64,15 @@ router.put('/shows/:id/available', async (req, res) =>{
         res.send('show not found')
     }
 })
-router.get('/shows/:id/users/:id', async (req, res) =>{
+router.get('/shows/:showId/users/:userId', async (req, res) =>{
+    const {showId, userId} = req.params
     const result =[]
-    let resultUser = await User.findByPk(req.params.id)
-    let resultShow = await Show.findByPk(req.params.id)
+    let resultUser = await User.findByPk(userId)
+    let resultShow = await Show.findByPk(showId)
     result.push({shows: resultShow, user: resultUser})
     await resultShow.addUser(resultUser)
-    let consoleUserShows = await Show.findAll({include: User})
-    console.log(result)
+    let consoleUserShows = await Show.findAll({where: {id: resultShow}},{include: User})
+    console.table(result)
     console.log(consoleUserShows)
     res.json(result)
 })
