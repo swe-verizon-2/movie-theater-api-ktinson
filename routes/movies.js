@@ -22,8 +22,9 @@ router.get('/users/:id', async (req, res) =>{
     res.json(result)
 })
 router.get('/users/:id/shows', async (req, res) =>{
-    let result = await User.findByPk(req.params.id)
-    res.json(result)
+    let user = await User.findByPk(req.params.id)
+    let response = await user.getShows()
+    res.json(response)
 })
 
 router.put('/users/:userId/shows/:showId', async (req, res) =>{
